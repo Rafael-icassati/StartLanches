@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RafaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tb_ingrendientes">
+    <Key>
+      <PropertyRef Name="cd_ingrediente" />
+    </Key>
+    <Property Name="cd_ingrediente" Type="Int32" Nullable="false" />
+    <Property Name="nm_ingrediente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cd_x_bacon_possui" Type="Int32" />
+    <Property Name="cd_x_burger_possui" Type="Int32" />
+    <Property Name="cd_x_egg_possui" Type="Int32" />
+    <Property Name="cd_x_egg_bacon_possui" Type="Int32" />
+    <Property Name="vl_valor" Type="Double" />
+  </EntityType>
+  <EntityType Name="tb_lanches">
+    <Key>
+      <PropertyRef Name="cd_lanche" />
+    </Key>
+    <Property Name="cd_lanche" Type="Int32" Nullable="false" />
+    <Property Name="nm_lanche" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tb_promocoes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="nm_promocao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nm_regra" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tb_pedidos">
+    <Key>
+      <PropertyRef Name="nr_pedido" />
+    </Key>
+    <Property Name="nr_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cd_status_pedido" Type="Int32" />
+    <Property Name="dt_entrada_pedido" Type="DateTime" Precision="3" />
+    <Property Name="dt_inicio_preparacao" Type="DateTime" Precision="3" />
+    <Property Name="dt_termino_preparacao" Type="DateTime" Precision="3" />
+    <Property Name="cd_lanche" Type="Int32" />
+    <Property Name="cd_alface" Type="Int32" />
+    <Property Name="cd_bacon" Type="Int32" />
+    <Property Name="cd_hamburguer_carne" Type="Int32" />
+    <Property Name="cd_ovo" Type="Int32" />
+    <Property Name="cd_queijo" Type="Int32" />
+    <Property Name="vl_pedido" Type="Double" />
+  </EntityType>
+  <EntityContainer Name="RafaDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tb_ingrendientes" EntityType="Self.tb_ingrendientes" />
+    <EntitySet Name="tb_lanches" EntityType="Self.tb_lanches" />
+    <EntitySet Name="tb_promocoes" EntityType="Self.tb_promocoes" />
+    <EntitySet Name="tb_pedidos" EntityType="Self.tb_pedidos" />
+    <FunctionImport Name="sp_calcula_lanche">
+      <Parameter Name="cd_alface" Mode="In" Type="Int32" />
+      <Parameter Name="cd_bacon" Mode="In" Type="Int32" />
+      <Parameter Name="cd_hamburguer_carne" Mode="In" Type="Int32" />
+      <Parameter Name="cd_ovo" Mode="In" Type="Int32" />
+      <Parameter Name="cd_queijo" Mode="In" Type="Int32" />
+      <Parameter Name="vl_soma_valor" Mode="InOut" Type="Double" />
+    </FunctionImport>
+    <FunctionImport Name="sp_faz_pedido">
+      <Parameter Name="cd_lanche" Mode="In" Type="Int32" />
+      <Parameter Name="cd_alface" Mode="In" Type="Int32" />
+      <Parameter Name="cd_bacon" Mode="In" Type="Int32" />
+      <Parameter Name="cd_hamburguer_carne" Mode="In" Type="Int32" />
+      <Parameter Name="cd_ovo" Mode="In" Type="Int32" />
+      <Parameter Name="cd_queijo" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

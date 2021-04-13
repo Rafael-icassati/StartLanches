@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RafaDBModelStoreContainer" CdmEntityContainer="RafaDBEntities">
+    <EntitySetMapping Name="tb_ingrendientes">
+      <EntityTypeMapping TypeName="RafaDBModel.tb_ingrendientes">
+        <MappingFragment StoreEntitySet="tb_ingrendientes">
+          <ScalarProperty Name="cd_ingrediente" ColumnName="cd_ingrediente" />
+          <ScalarProperty Name="nm_ingrediente" ColumnName="nm_ingrediente" />
+          <ScalarProperty Name="cd_x_bacon_possui" ColumnName="cd_x_bacon_possui" />
+          <ScalarProperty Name="cd_x_burger_possui" ColumnName="cd_x_burger_possui" />
+          <ScalarProperty Name="cd_x_egg_possui" ColumnName="cd_x_egg_possui" />
+          <ScalarProperty Name="cd_x_egg_bacon_possui" ColumnName="cd_x_egg_bacon_possui" />
+          <ScalarProperty Name="vl_valor" ColumnName="vl_valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_lanches">
+      <EntityTypeMapping TypeName="RafaDBModel.tb_lanches">
+        <MappingFragment StoreEntitySet="tb_lanches">
+          <ScalarProperty Name="cd_lanche" ColumnName="cd_lanche" />
+          <ScalarProperty Name="nm_lanche" ColumnName="nm_lanche" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_promocoes">
+      <EntityTypeMapping TypeName="RafaDBModel.tb_promocoes">
+        <MappingFragment StoreEntitySet="tb_promocoes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nm_promocao" ColumnName="nm_promocao" />
+          <ScalarProperty Name="nm_regra" ColumnName="nm_regra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_pedidos">
+      <EntityTypeMapping TypeName="RafaDBModel.tb_pedidos">
+        <MappingFragment StoreEntitySet="tb_pedidos">
+          <ScalarProperty Name="nr_pedido" ColumnName="nr_pedido" />
+          <ScalarProperty Name="cd_status_pedido" ColumnName="cd_status_pedido" />
+          <ScalarProperty Name="dt_entrada_pedido" ColumnName="dt_entrada_pedido" />
+          <ScalarProperty Name="dt_inicio_preparacao" ColumnName="dt_inicio_preparacao" />
+          <ScalarProperty Name="dt_termino_preparacao" ColumnName="dt_termino_preparacao" />
+          <ScalarProperty Name="cd_lanche" ColumnName="cd_lanche" />
+          <ScalarProperty Name="cd_alface" ColumnName="cd_alface" />
+          <ScalarProperty Name="cd_bacon" ColumnName="cd_bacon" />
+          <ScalarProperty Name="cd_hamburguer_carne" ColumnName="cd_hamburguer_carne" />
+          <ScalarProperty Name="cd_ovo" ColumnName="cd_ovo" />
+          <ScalarProperty Name="cd_queijo" ColumnName="cd_queijo" />
+          <ScalarProperty Name="vl_pedido" ColumnName="vl_pedido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_calcula_lanche" FunctionName="RafaDBModel.Store.sp_calcula_lanche" />
+    <FunctionImportMapping FunctionImportName="sp_faz_pedido" FunctionName="RafaDBModel.Store.sp_faz_pedido" />
+  </EntityContainerMapping>
+</Mapping>

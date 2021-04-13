@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RafaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_ingrendientes">
+          <Key>
+            <PropertyRef Name="cd_ingrediente" />
+          </Key>
+          <Property Name="cd_ingrediente" Type="int" Nullable="false" />
+          <Property Name="nm_ingrediente" Type="varchar" MaxLength="50" />
+          <Property Name="cd_x_bacon_possui" Type="int" />
+          <Property Name="cd_x_burger_possui" Type="int" />
+          <Property Name="cd_x_egg_possui" Type="int" />
+          <Property Name="cd_x_egg_bacon_possui" Type="int" />
+          <Property Name="vl_valor" Type="float" />
+        </EntityType>
+        <EntityType Name="tb_lanches">
+          <Key>
+            <PropertyRef Name="cd_lanche" />
+          </Key>
+          <Property Name="cd_lanche" Type="int" Nullable="false" />
+          <Property Name="nm_lanche" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\RAFA\SOURCE\REPOS\STARTLANCHES\STARTLANCHES\RAFADB.MDF.dbo.tb_pedidos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tb_pedidos">
+          <Key>
+            <PropertyRef Name="nr_pedido" />
+          </Key>
+          <Property Name="nr_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cd_status_pedido" Type="int" />
+          <Property Name="dt_entrada_pedido" Type="datetime" />
+          <Property Name="dt_inicio_preparacao" Type="datetime" />
+          <Property Name="dt_termino_preparacao" Type="datetime" />
+          <Property Name="cd_lanche" Type="int" />
+          <Property Name="cd_alface" Type="int" />
+          <Property Name="cd_bacon" Type="int" />
+          <Property Name="cd_hamburguer_carne" Type="int" />
+          <Property Name="cd_ovo" Type="int" />
+          <Property Name="cd_queijo" Type="int" />
+          <Property Name="vl_pedido" Type="float" />
+        </EntityType>
+        <EntityType Name="tb_promocoes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nm_promocao" Type="varchar" MaxLength="50" />
+          <Property Name="nm_regra" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'C:\USERS\RAFA\SOURCE\REPOS\STARTLANCHES\STARTLANCHES\RAFADB.MDF.dbo.tb_status_pedido' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="tb_status_pedido">
+          <Property Name="cd_status_pedido" Type="int" />
+          <Property Name="nm_status_pedido" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <Function Name="sp_calcula_lanche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cd_alface" Type="int" Mode="In" />
+          <Parameter Name="cd_bacon" Type="int" Mode="In" />
+          <Parameter Name="cd_hamburguer_carne" Type="int" Mode="In" />
+          <Parameter Name="cd_ovo" Type="int" Mode="In" />
+          <Parameter Name="cd_queijo" Type="int" Mode="In" />
+          <Parameter Name="vl_soma_valor" Type="float" Mode="InOut" />
+        </Function>
+        <Function Name="sp_faz_pedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cd_lanche" Type="int" Mode="In" />
+          <Parameter Name="cd_alface" Type="int" Mode="In" />
+          <Parameter Name="cd_bacon" Type="int" Mode="In" />
+          <Parameter Name="cd_hamburguer_carne" Type="int" Mode="In" />
+          <Parameter Name="cd_ovo" Type="int" Mode="In" />
+          <Parameter Name="cd_queijo" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="RafaDBModelStoreContainer">
+          <EntitySet Name="tb_ingrendientes" EntityType="Self.tb_ingrendientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_lanches" EntityType="Self.tb_lanches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_promocoes" EntityType="Self.tb_promocoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_pedidos" EntityType="Self.tb_pedidos" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_pedidos].[nr_pedido] AS [nr_pedido], 
+    [tb_pedidos].[cd_status_pedido] AS [cd_status_pedido], 
+    [tb_pedidos].[dt_entrada_pedido] AS [dt_entrada_pedido], 
+    [tb_pedidos].[dt_inicio_preparacao] AS [dt_inicio_preparacao], 
+    [tb_pedidos].[dt_termino_preparacao] AS [dt_termino_preparacao], 
+    [tb_pedidos].[cd_lanche] AS [cd_lanche], 
+    [tb_pedidos].[cd_alface] AS [cd_alface], 
+    [tb_pedidos].[cd_bacon] AS [cd_bacon], 
+    [tb_pedidos].[cd_hamburguer_carne] AS [cd_hamburguer_carne], 
+    [tb_pedidos].[cd_ovo] AS [cd_ovo], 
+    [tb_pedidos].[cd_queijo] AS [cd_queijo], 
+    [tb_pedidos].[vl_pedido] AS [vl_pedido]
+    FROM [dbo].[tb_pedidos] AS [tb_pedidos]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RafaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_ingrendientes">
+          <Key>
+            <PropertyRef Name="cd_ingrediente" />
+          </Key>
+          <Property Name="cd_ingrediente" Type="Int32" Nullable="false" />
+          <Property Name="nm_ingrediente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cd_x_bacon_possui" Type="Int32" />
+          <Property Name="cd_x_burger_possui" Type="Int32" />
+          <Property Name="cd_x_egg_possui" Type="Int32" />
+          <Property Name="cd_x_egg_bacon_possui" Type="Int32" />
+          <Property Name="vl_valor" Type="Double" />
+        </EntityType>
+        <EntityType Name="tb_lanches">
+          <Key>
+            <PropertyRef Name="cd_lanche" />
+          </Key>
+          <Property Name="cd_lanche" Type="Int32" Nullable="false" />
+          <Property Name="nm_lanche" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_promocoes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nm_promocao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nm_regra" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_pedidos">
+          <Key>
+            <PropertyRef Name="nr_pedido" />
+          </Key>
+          <Property Name="nr_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cd_status_pedido" Type="Int32" />
+          <Property Name="dt_entrada_pedido" Type="DateTime" Precision="3" />
+          <Property Name="dt_inicio_preparacao" Type="DateTime" Precision="3" />
+          <Property Name="dt_termino_preparacao" Type="DateTime" Precision="3" />
+          <Property Name="cd_lanche" Type="Int32" />
+          <Property Name="cd_alface" Type="Int32" />
+          <Property Name="cd_bacon" Type="Int32" />
+          <Property Name="cd_hamburguer_carne" Type="Int32" />
+          <Property Name="cd_ovo" Type="Int32" />
+          <Property Name="cd_queijo" Type="Int32" />
+          <Property Name="vl_pedido" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="RafaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_ingrendientes" EntityType="Self.tb_ingrendientes" />
+          <EntitySet Name="tb_lanches" EntityType="Self.tb_lanches" />
+          <EntitySet Name="tb_promocoes" EntityType="Self.tb_promocoes" />
+          <EntitySet Name="tb_pedidos" EntityType="Self.tb_pedidos" />
+          <FunctionImport Name="sp_calcula_lanche">
+            <Parameter Name="cd_alface" Mode="In" Type="Int32" />
+            <Parameter Name="cd_bacon" Mode="In" Type="Int32" />
+            <Parameter Name="cd_hamburguer_carne" Mode="In" Type="Int32" />
+            <Parameter Name="cd_ovo" Mode="In" Type="Int32" />
+            <Parameter Name="cd_queijo" Mode="In" Type="Int32" />
+            <Parameter Name="vl_soma_valor" Mode="InOut" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="sp_faz_pedido">
+            <Parameter Name="cd_lanche" Mode="In" Type="Int32" />
+            <Parameter Name="cd_alface" Mode="In" Type="Int32" />
+            <Parameter Name="cd_bacon" Mode="In" Type="Int32" />
+            <Parameter Name="cd_hamburguer_carne" Mode="In" Type="Int32" />
+            <Parameter Name="cd_ovo" Mode="In" Type="Int32" />
+            <Parameter Name="cd_queijo" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RafaDBModelStoreContainer" CdmEntityContainer="RafaDBEntities">
+          <EntitySetMapping Name="tb_ingrendientes">
+            <EntityTypeMapping TypeName="RafaDBModel.tb_ingrendientes">
+              <MappingFragment StoreEntitySet="tb_ingrendientes">
+                <ScalarProperty Name="cd_ingrediente" ColumnName="cd_ingrediente" />
+                <ScalarProperty Name="nm_ingrediente" ColumnName="nm_ingrediente" />
+                <ScalarProperty Name="cd_x_bacon_possui" ColumnName="cd_x_bacon_possui" />
+                <ScalarProperty Name="cd_x_burger_possui" ColumnName="cd_x_burger_possui" />
+                <ScalarProperty Name="cd_x_egg_possui" ColumnName="cd_x_egg_possui" />
+                <ScalarProperty Name="cd_x_egg_bacon_possui" ColumnName="cd_x_egg_bacon_possui" />
+                <ScalarProperty Name="vl_valor" ColumnName="vl_valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_lanches">
+            <EntityTypeMapping TypeName="RafaDBModel.tb_lanches">
+              <MappingFragment StoreEntitySet="tb_lanches">
+                <ScalarProperty Name="cd_lanche" ColumnName="cd_lanche" />
+                <ScalarProperty Name="nm_lanche" ColumnName="nm_lanche" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_promocoes">
+            <EntityTypeMapping TypeName="RafaDBModel.tb_promocoes">
+              <MappingFragment StoreEntitySet="tb_promocoes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nm_promocao" ColumnName="nm_promocao" />
+                <ScalarProperty Name="nm_regra" ColumnName="nm_regra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_pedidos">
+            <EntityTypeMapping TypeName="RafaDBModel.tb_pedidos">
+              <MappingFragment StoreEntitySet="tb_pedidos">
+                <ScalarProperty Name="nr_pedido" ColumnName="nr_pedido" />
+                <ScalarProperty Name="cd_status_pedido" ColumnName="cd_status_pedido" />
+                <ScalarProperty Name="dt_entrada_pedido" ColumnName="dt_entrada_pedido" />
+                <ScalarProperty Name="dt_inicio_preparacao" ColumnName="dt_inicio_preparacao" />
+                <ScalarProperty Name="dt_termino_preparacao" ColumnName="dt_termino_preparacao" />
+                <ScalarProperty Name="cd_lanche" ColumnName="cd_lanche" />
+                <ScalarProperty Name="cd_alface" ColumnName="cd_alface" />
+                <ScalarProperty Name="cd_bacon" ColumnName="cd_bacon" />
+                <ScalarProperty Name="cd_hamburguer_carne" ColumnName="cd_hamburguer_carne" />
+                <ScalarProperty Name="cd_ovo" ColumnName="cd_ovo" />
+                <ScalarProperty Name="cd_queijo" ColumnName="cd_queijo" />
+                <ScalarProperty Name="vl_pedido" ColumnName="vl_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_calcula_lanche" FunctionName="RafaDBModel.Store.sp_calcula_lanche" />
+          <FunctionImportMapping FunctionImportName="sp_faz_pedido" FunctionName="RafaDBModel.Store.sp_faz_pedido" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
